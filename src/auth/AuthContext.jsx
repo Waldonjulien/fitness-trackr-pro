@@ -6,12 +6,12 @@
 
 import { createContext, useContext, useState } from "react";
 
-import { API } from "../api/ApiContext";
+import { API } from "../api/ApiContext.jsx";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(null);
 
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
