@@ -2,6 +2,7 @@ import { useAuth } from "../auth/AuthContext";
 import useQuery from "../api/useQuery";
 import useMutation from "../api/useMutation";
 import { useParams, useNavigate } from "react-router";
+import Sets from "./sets.jsx";
 function Routines() {
   const { token } = useAuth();
   const { id } = useParams();
@@ -17,10 +18,10 @@ function Routines() {
   return (
     <>
       <h2>{routine.name}</h2>
-      <p>{routine.goal}</p>
-      <p>{routine.creatorName}</p>
+      <p>Goal: {routine.goal}</p>
+      <p>Created by: {routine.creatorName}</p>
       {token && <DeleteButton routine={routine} token={token} />}
-      <AddRoutineForm />
+      <Sets routineId={id} />
     </>
   );
 }
