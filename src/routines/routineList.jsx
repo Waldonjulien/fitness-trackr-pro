@@ -18,13 +18,15 @@ function RoutineList() {
 
 function RoutineListItem({ routine }) {
   return (
-    <li>
-      <Link to={"/routinres/" + routine.id}>
+    <div>
+      <Link to={"/routines/" + routine.id}>
         <h2>{routine.name}</h2>
         <p>{routine.description}</p>
+        <p> {routine.creator}</p>
       </Link>
-    </li>
+    </div>
   );
 }
 
 export default RoutineList;
+export { RoutineListItem };

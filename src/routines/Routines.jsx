@@ -2,18 +2,23 @@ import { useAuth } from "../auth/AuthContext";
 import useQuery from "../api/useQuery";
 import useMutation from "../api/useMutation";
 import { useParams, useNavigate } from "react-router";
-import Sets from "./sets.jsx";
-function Routines() {
+import Sets from "./sets/Sets.jsx";
+import SetsForm from "./sets/SetsForm.jsx";
+
+export default function Routines() {
   const { token } = useAuth();
   const { id } = useParams();
+
+  // Fetch routine data
   const {
     data: routine,
     loading,
     error,
+    refetch: syncRoutine,
   } = useQuery("/routines/" + id, "routines");
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p> Error</p>;
+  if (error) return <p> Error: {error}</p>;
 
   return (
     <>
@@ -21,7 +26,10 @@ function Routines() {
       <p>Goal: {routine.goal}</p>
       <p>Created by: {routine.creatorName}</p>
       {token && <DeleteButton routine={routine} token={token} />}
-      <Sets routineId={id} />
+
+      <Sets sets={routine.activities || []} syncRoutine={syncRoutine} />
+
+      {token && <SetsForm routineId={id} syncRoutine={syncRoutine} />}
     </>
   );
 }
@@ -62,7 +70,7 @@ function AddRoutineForm() {
   );
 }
 
-function DeleteButton({ routine, token }) {
+function DeleteButton({ routine }) {
   const navigate = useNavigate();
   const {
     mutate: deleteRoutine,
@@ -75,17 +83,14 @@ function DeleteButton({ routine, token }) {
     if (success) navigate("/routines");
   };
   return (
-    <li>
-      <p>{routine.name}</p>
-      {token && (
-        <button onClick={onDeleteRoutine} disabled={loading}>
-          {loading ? "Deleting..." : error ? error : "Delete"}
-        </button>
-      )}
-    </li>
+    <div>
+      <button onClick={onDeleteRoutine} disabled={loading}>
+        {loading ? "Deleting..." : error ? error : "Delete Routine"}
+      </button>
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+    </div>
   );
 }
 
 export { AddRoutineForm };
-export default Routines;
 export { DeleteButton };

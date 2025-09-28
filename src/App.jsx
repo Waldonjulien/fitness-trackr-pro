@@ -8,8 +8,6 @@ import Error404 from "./Error404.jsx";
 import { Routes, Route } from "react-router";
 import Routines from "./routines/Routines.jsx";
 import RoutinePage from "./routines/RoutinePage.jsx";
-import RoutineListItem from "./routines/routineList.jsx";
-import Sets from "./routines/sets.jsx";
 
 export default function App() {
   return (
@@ -18,10 +16,10 @@ export default function App() {
         <Route index element={<ActivitiesPage />} />
         <Route path="/activities" element={<ActivitiesPage />} />
         <Route path="/activities/:id" element={<ActivityInfo />} />
+
         <Route path="/routines" element={<RoutinePage />} />
         <Route path="/routines/:id" element={<Routines />} />
-        <Route path="/routinres/:id" element={<RoutineListItem />} />
-        <Route path="/sets" element={<Sets />} />
+
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<Error404 />} />
