@@ -9,7 +9,6 @@ export default function Routines() {
   const { token } = useAuth();
   const { id } = useParams();
 
-  // Fetch routine data
   const {
     data: routine,
     loading,
@@ -22,12 +21,12 @@ export default function Routines() {
 
   return (
     <>
-      <h2>{routine.name}</h2>
-      <p>Goal: {routine.goal}</p>
-      <p>Created by: {routine.creatorName}</p>
+      <h2>{routine?.name}</h2>
+      <p>Goal: {routine?.goal}</p>
+      <p>Created by: {routine?.creatorName}</p>
       {token && <DeleteButton routine={routine} token={token} />}
 
-      <Sets sets={routine.activities || []} syncRoutine={syncRoutine} />
+      <Sets sets={routine?.activities || []} syncRoutine={syncRoutine} />
 
       {token && <SetsForm routineId={id} syncRoutine={syncRoutine} />}
     </>
@@ -76,7 +75,7 @@ function DeleteButton({ routine }) {
     mutate: deleteRoutine,
     loading,
     error,
-  } = useMutation("DELETE", "/routines/" + routine.id, ["routines"]);
+  } = useMutation("DELETE", "/routines/" + routine?.id, ["routines"]);
 
   const onDeleteRoutine = async () => {
     const success = await deleteRoutine();

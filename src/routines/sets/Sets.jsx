@@ -5,7 +5,7 @@ export default function Sets({ sets, syncRoutine }) {
   return (
     <>
       <h3>Sets</h3>
-      {sets.length > 0 ? (
+      {sets?.length > 0 ? (
         <ul className="sets">
           {sets.map((set) => (
             <Set key={set.id} set={set} syncRoutine={syncRoutine} />
@@ -46,11 +46,7 @@ function Set({ set, syncRoutine }) {
           {deleteLoading ? "Deleting..." : "Delete"}
         </button>
       )}
-      {deleteError && (
-        <p role="alert" style={{ color: "red" }}>
-          Error: {deleteError}
-        </p>
-      )}
+      {deleteError && <p role="alert">Error: {deleteError}</p>}
     </li>
   );
 }
